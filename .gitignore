@@ -1,0 +1,6 @@
+.env
+uv.lock
+.python-version
+output/
+.venv/
+papers/

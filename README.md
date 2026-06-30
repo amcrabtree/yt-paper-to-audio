@@ -1,2 +1,4 @@
-# yt-paper-to-audio
-Converts a scientific paper into an entertaining audio file
+
+Convert a scientific paper into an entertaining audio file
+
+
