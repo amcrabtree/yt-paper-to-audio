@@ -4,3 +4,4 @@ uv.lock
 output/
 .venv/
 papers/
+.DS_Store
