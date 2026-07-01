@@ -14,7 +14,7 @@ Convert a scientific paper into an entertaining audio summary using an LLM and t
 **1. Clone the repo and install dependencies**
 
 ```bash
-git clone <repo-url>
+git clone https://github.com/amcrabtree/yt-paper-to-audio
 cd yt-paper-to-audio
 uv sync
 ```
