@@ -1,100 +1,95 @@
 ---
 name: paper-to-audio-summary
-description: 'Convert a scientific paper into a 15-minute entertaining and informative summary optimized for audio. Use when you need a spoken-only, audience-aware overview of a paper for audio narration.'
+description: >
+  Converts text extracted from a scientific paper into a polished, spoken-word-only audio script
+  optimized for ~15 minutes of narration. Use this skill whenever the user provides paper text (or a
+  PDF, abstract, or extracted content) and asks for a script, audio summary, narrated summary,
+  podcast-style breakdown, or spoken version of a paper. Also trigger when the user says things like
+  "turn this paper into audio", "write a script for this paper", "make this paper listenable", or
+  "summarize this for a podcast". The audience is a researcher with strong ML and histopathology
+  expertise who wants to build intuition in cancer immunobiology. Output is ONLY spoken words — no
+  stage directions, no section headers, no bracketed notes. The narrator opens with the paper's full
+  title and introduces the authors.
 ---
 
-# Paper to Audio Summary
+# Paper-to-Audio Script
 
-## When to Use
-- You are turning a scientific paper into a narrated audio segment.
-- You want a summary that is engaging, accurate, and tailored for an expert audience.
-- The output will be read aloud directly, so it must sound natural when spoken.
+Convert a scientific paper into a ~15-minute engaging, informative spoken-word audio script.
 
-## Goal
-Create a 15-minute audio script that explains the paper clearly and vividly for a listener with a strong background in histopathology machine learning who wants to learn more about cancer immunobiology.
+## Core Constraints
 
-## Output Format — Critical
-- Return the narration script and nothing else.
-- Do not include any preamble, notes, headers, labels, or commentary before or after the script.
-- Do not include stage directions, section labels, or any text that would not be spoken aloud by the narrator.
-- The very first word of your response must be the first spoken word of the script.
-- The very last word of your response must be the last spoken word of the script.
+- **Output is spoken words only.** No headers, no stage directions, no "[pause]", no bracketed notes, no markdown formatting. Every character in the output will be read aloud by a narrator.
+- **Target length**: ~2,000–2,400 words (roughly 15 minutes at a natural narration pace of ~140 wpm).
+- **Opening line**: Always begin with: `"Today's paper is called..."` followed by the full title, then introduce the first author, corresponding author (if different), and their affiliations.
+- **No jargon without grounding**: Technical terms are fine but must be grounded in plain language on first use.
 
-## Core Requirements
-- Open by stating the full title of the paper exactly as it appears, followed immediately by introducing the authors.
-- Introduce the first author and the corresponding author by name, mention their institutional affiliations, and briefly note what kind of lab or research group they come from.
-- If the first author and corresponding author are the same person, say so.
-- Write only text that is meant to be spoken.
-- Keep the tone entertaining, informative, and conversational.
-- Make the piece feel like a strong audio narration, not a written paper summary.
-- Aim for roughly 15 minutes of listening time, which is usually about 1800 to 2200 words.
+## Audience Profile
 
-## Audience and Voice
-- Assume the listener is technically sophisticated and already comfortable with machine learning concepts.
-- They want depth, not oversimplification.
-- Use a confident, lively, story-driven narration style.
-- Explain advanced ideas clearly without becoming dry or overly academic.
+The listener has:
+- Strong ML background: familiar with CNNs, transformers, attention mechanisms, training pipelines, evaluation metrics, weakly supervised learning, etc. Go deep on models — don't oversimplify.
+- Strong histopathology background: comfortable with H&E, IHC, tissue morphology, spatial concepts.
+- **Building expertise in cancer immunobiology.** This is the gap to fill. Prioritize:
+  - What each immune cell type *does* in the immune system before explaining its role in the paper
+  - Why the tumor microenvironment (TME) matters conceptually
+  - What the biological findings *mean*, not just what they are
 
-## Content Priorities
-1. Start with the paper title and authors.
-2. Introduce the central question or problem the paper is addressing.
-3. Explain the biological context in a way that helps the listener understand why the work matters.
-4. If the paper discusses immune cell subtypes, spend extra time explaining what those cells do in the immune system and why they matter.
-5. If the paper uses machine learning models, translate them into simple language while still allowing room for technical detail.
-6. End by explaining the broader significance of the work and why it matters for cancer immunobiology.
+## Script Structure
 
-## Structure for the Script
-Use this sequence unless the paper strongly suggests a different flow:
+Follow this arc. Do not label sections — just flow naturally between them.
 
-1. Opening hook
-   - State the full paper title exactly as written.
-   - Introduce the first author and corresponding author by name, their affiliations, and what kind of research group they represent.
-   - Briefly frame the topic and why it matters.
+### 1. Hook (30–60 seconds)
+Open with the title and authors, then immediately establish *why this paper matters*. What problem does it solve? What was unknown or broken before? Make it feel consequential.
 
-2. The biological problem
-   - Explain the scientific question in plain but precise terms.
-   - Give enough background that the listener can follow without needing the paper itself.
+### 2. Biological Context (2–3 minutes)
+Lay the groundwork any listener needs before the paper makes sense. Cover:
+- The disease or biological system studied
+- Key immune cell types involved — for **each cell type**, briefly explain its canonical role in the immune system (e.g., "CD8+ T cells, also called cytotoxic T cells, are the immune system's assassins — they're trained to recognize and kill cells that display foreign or abnormal proteins on their surface") before explaining its role in the paper
+- The tumor microenvironment if relevant: explain it as a complex ecosystem where cancer cells, immune cells, and stromal cells are in constant negotiation
 
-3. What the paper actually did
-   - Describe the main methods, datasets, or experimental design.
-   - If relevant, explain the machine learning approach in accessible language.
-   - Keep the explanation focused on what the model was trying to learn and why.
+### 3. The Research Question (1 minute)
+State clearly what the authors set out to learn or build. One crisp question or hypothesis.
 
-4. Key findings
-   - Summarize the main results in a way that feels vivid and memorable.
-   - Highlight any surprising or important observations.
+### 4. Methods (3–4 minutes)
+Walk through what was done: cohorts, data, experimental design, and any computational models. For **ML models**:
+- Name the architecture and explain how it works at an intuitive level (e.g., "a multiple-instance learning model treats each patient's slide as a bag of tiles, and learns which tiles are most predictive of the outcome — without ever being told which region matters")
+- Mention key design choices: loss functions, supervision strategy, input modalities
+- Explain evaluation strategy: what metrics, what baselines, what held-out sets
 
-5. Immune biology emphasis
-   - When immune cells are involved, explain their roles clearly.
-   - Emphasize how these cells shape inflammation, tumor control, immune evasion, or tissue remodeling.
-   - Help the listener understand the biology, not just the model output.
+### 5. Results (3–4 minutes)
+Walk through the key findings in order of importance. Use concrete numbers when they're compelling ("improved AUC from 0.71 to 0.84"). Translate statistical language into plain meaning. If the paper has multiple experiments, prioritize the ones that most directly answer the research question.
 
-6. Why the work matters
-   - Close with the bigger picture.
-   - Explain what the paper adds to the field and what might come next.
+### 6. Biological Meaning (2 minutes)
+Step back from the numbers. What do these results tell us about biology? If immune subtypes are involved, explain what it *means* that a certain cell type was enriched, depleted, or predictive. Connect results to known biology where possible.
 
-## Style Rules
-- Write in full sentences and natural spoken rhythm.
-- Prefer conversational phrasing over formal academic wording.
-- Avoid bullet points, citations, or dense reference formatting.
-- Avoid stage directions like “pause” or “laughs.”
-- Do not include text that would only make sense on a page.
-- Keep the language vivid enough to be entertaining while remaining precise.
+### 7. Limitations and Open Questions (1 minute)
+Be honest about what the paper doesn't prove. What cohorts might not generalize? What's still unknown? What's the next logical experiment?
 
-## Technical Explanation Rules
-- If a machine learning model is described, explain it in simple terms first.
-- Then add enough technical detail for an expert audience to appreciate the approach.
-- For example, explain whether the model is classifying, predicting, embedding, clustering, or estimating a biological signal.
-- If the model is a neural network, transformer, graph model, or survival model, briefly explain what that means in practical terms.
+### 8. Takeaway (30–60 seconds)
+End with a memorable synthesis. What should the listener carry with them? What does this paper change about how we think about the problem?
 
-## Quality Check
-Before finishing, confirm that:
-- The response contains only the spoken script — no headers, labels, preamble, or closing notes.
-- The full paper title appears first, stated exactly as written.
-- The first author and corresponding author are both introduced by name with their affiliations.
-- The script is written as spoken text only.
-- The tone is entertaining and informative.
-- The audience is treated as technically capable but curious.
-- Immune cell roles are explained clearly when relevant.
-- Machine learning methods are translated into understandable language.
-- The script feels like it could be read aloud for a full 15-minute segment.
+## Tone and Style
+
+- **Conversational but precise**: like a knowledgeable friend explaining a paper over coffee, not a textbook being read aloud
+- **Active voice**: prefer "the model learned to..." over "it was found that..."
+- **Analogies welcome**: use them to build intuition, especially for immunobiology concepts the audience is still developing
+- **No fluff**: skip filler phrases like "This is a fascinating paper..." — just get into it
+- **Transitions**: use spoken transitions between topics ("With that context in mind...", "Now here's where things get interesting...", "So what did they actually find?")
+
+## Special Handling
+
+**Immune cell types**: Every named immune cell gets a one-sentence role description on first mention. Examples:
+- Macrophages: "macrophages are the immune system's janitors and sentinels — they engulf debris and dead cells, but also coordinate inflammation and can either attack tumors or be co-opted to protect them"
+- Tregs: "regulatory T cells, or Tregs, act as the immune system's brakes — they suppress other immune cells to prevent autoimmunity, but in tumors, they often end up suppressing the very cells that should be attacking the cancer"
+- NK cells: "natural killer cells are innate immune sentinels that don't need prior training to recognize and destroy abnormal cells — they're a first line of defense before the adaptive immune system has time to respond"
+
+**ML models**: Explain architecture, training supervision, and key design decisions. Use analogies. Assume the listener can handle precision — e.g., "they used a transformer encoder to generate patch-level embeddings, then aggregated across the slide using attention-based pooling, which lets the model highlight the patches it found most informative."
+
+**Missing information**: If the extracted text is incomplete (e.g., methods are truncated, author affiliations are missing), write around it naturally without calling attention to the gap. Do not say "the paper doesn't mention..." — just omit that element.
+
+## Output Format
+
+Begin the script immediately — no preamble, no explanation, no metadata. Just the spoken words.
+
+Start with: `Today's paper is called...`
+
+End with a natural closing sentence. No sign-off, no "thanks for listening."
