@@ -3,5 +3,5 @@ uv.lock
 .python-version
 output/
 .venv/
-papers/
+papers/*.pdf
 .DS_Store
