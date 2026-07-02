@@ -5,7 +5,14 @@ import argparse
 import io
 import os
 import re
+import warnings
 from pathlib import Path
+
+warnings.filterwarnings(
+    "ignore",
+    message=r"`torch\.nn\.utils\.weight_norm` is deprecated",
+    category=FutureWarning,
+)
 
 import litellm
 import numpy as np
