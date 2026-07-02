@@ -19,6 +19,8 @@ cd yt-paper-to-audio
 uv sync
 ```
 
+If you don't have uv installed, install it first with `curl -LsSf https://astral.sh/uv/install.sh | sh` and then open a new bash Terminal. 
+
 **2. Create a `.env` file**
 
 ```bash
